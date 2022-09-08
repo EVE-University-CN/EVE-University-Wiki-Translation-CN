@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>EVE大学中文：跃迁</title>
+        <link rel="stylesheet" href="css/default.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.css" integrity="sha384-bYdxxUwYipFNohQlHt0bjN/LCpueqWz13HufFEV1SUatKs1cm4L6fFgCi1jT643X" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/highlight.dark.min.css">
+        <script src="js/highlight.min.js"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.js" integrity="sha384-Qsn9KnoKISj6dI8g7p1HBlNpVx0I8p1SvlwOldgi3IorMle61nQy4zEahWYtljaz" crossorigin="anonymous"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+        <script>
+            hljs.highlightAll();
+            document.addEventListener("DOMContentLoaded", function() {
+                renderMathInElement(document.body, {
+                  delimiters: [
+                      {left: '$$', right: '$$', display: true},
+                      {left: '$', right: '$', display: false},
+                      {left: '\\(', right: '\\)', display: false},
+                      {left: '\\[', right: '\\]', display: true}
+                  ],
+                  throwOnError : false
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div class="ref-note">翻译自<a href="https://wiki.eveuniversity.org/Warp">https://wiki.eveuniversity.org/Warp</a></div>
+        <h1>跃迁</h1>
+        <div class="article-body">
+            <div class="word-explanation">
+                跃迁是主要的应用于新伊甸的舰船的超光速航行方法。跃迁航行仅限于在两个在同一恒星系的地点间的穿梭，并且只能对至少150km远的地点启动。跃迁终点在跃迁指令被下达时就被决定。这对于你跃迁到移动物体时很重要，例如舰队成员。你也不会在精确的跃迁目的地点上脱出跃迁，而是在以该地点为球心的3km的球体上。这意味着你有时候会在一个你跃迁到的空间站的停靠范围外落地。这就是保存<a href="Terminology.html">秒进站</a>点的原因。
+            </div>
+            <div>
+                <h2>跃迁阶段</h2>
+                跃迁航行包含以下三个阶段：
+                <ol>
+                    <li>加速</li>
+                    <li>巡航</li>
+                    <li>减速</li>
+                </ol>
+                <p>
+                    基于CCP发布的公式，解出一艘舰船完成跃迁（自进入跃迁开始计算）应该花费的时间是有可能的。
+                </p>
+                <p>
+                    计算跃迁花费的时间是通过计算这些阶段中每个阶段花费的时间相加得到。这需要首先计算加速和减速时间，接着是巡航时间。这个计算不包括进入跃迁所花费的时间（加速到75%最大速度），也不包括重新获得对舰船的控制后的减速时间。
+                </p>
+                <div>
+                    $$
+                    t_{total}=t_{accel}+t_{decel}+t_{cruise}
+                    $$
+                </div>
+            </div>
+            <div>
+                <h2>长途跃迁</h2>
+                <div>
+                    <h3>加速</h3>
+                    <div>
+                        <h4>公式</h4>
+                        <p>
+                            CCP提供了加速t秒后所走的距离和达到的速度的公式。d是距离（m），v是速度（m/s），k是飞船的曲率速度（AU/s），a是149,597,870,700m（1AU）。
+                        </p>
+                        <div class="math">
+                            $$
+                            \begin{align}
+                            d&=e^{kt}\\
+                            v&=k\cdot e^{kt}\\
+                            v_{warp}&=k\cdot a
+                            \end{align}
+                            $$
+                        </div>
+                    </div>
+                    <div>
+                        <h4>距离</h4>
+                        <p>
+                            为了计算加速中航行的距离：
+                        </p>
+                        <div class="math">
+                            $$
+                            \begin{align}
+                            d&=e^{kt}\\
+                            v&=k\cdot e^{kt}\\
+                            &=k\cdot d\\
+                            \therefore d&=\frac{v}{k}   
+                            \end{align}
+                            $$
+                        </div>
+                        <p>
+                            对于<span class="math">$v_{warp}$<span></span>加速中通过距离是：
+                        </p>
+                        <div class="math">
+                            $$
+                            d_{accel}=\frac{v_{warp}}{k}=\frac{k\cdot a}{k}=a
+                            $$
+                        </div>
+                        <p>
+                            这意味着每一艘舰船在加速到她的最大航速时都会通过恰好1AU
+                        </p>
+                    </div>
+                    <div>
+                        <h4>时间</h4>
+                        <p>
+                            为了计算加速到翘曲速度所花费的时间，$v$的方程应该重新排列为$t$，然后解决$v$等于翘曲速度的情况（单位：m/s）。
+                        </p>
+                        <div class="math">
+                            $$
+                            \begin{align}
+                            v&=k\cdot e^{kt}\\
+                            \frac{v}{k}&=e^{kt}\\
+                            kt&=\ln(\frac{v}{k})\\
+                            t&=\frac{\ln(\frac{v}{k})}{k}
+                            \end{align}
+                            $$
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3>减速</h3>
+                    <p>
+                        减速段计算有点不一样。它使用定义为<span class="math">$min(\frac{k}{3},2)$</span>的<span class="math">$j$</span>而不是<span class="math">$k$</span>来计算距离和速度。不同的减速率是用来防止飞船突然从 "许多许多AU的距离 "过渡到 "在网格上脱出跃迁"，其速度超过其他飞行员（或服务器/客户端）所能跟上的速度。在减速计算方面有一个复杂的问题。舰船并不是在0m/s时脱离曲率。相反，它们是在$s$m/s时脱出跃迁，之后再进行正常的亚跃迁计算。
+                    </p>
+                    <div class="math">
+                        $$
+                        s=min(100,\frac{v_{subwarp}}{2})
+                        $$
+                    </div>
+                    <p>
+                        其中<span class="math">$v_{subwarp}$</span>是舰船的最大亚跃迁速度；这在很大程度上取决于船体和飞行员的技能。
+                    </p>
+                    <div>
+                        <h4>距离</h4>
+                        <p>
+                            这使所使用的公式略有变化。请记住，航行的距离是速度的积分。
+                        </p>
+                        <div class="math">
+                            $$
+                            \begin{align}
+                            v&=k\cdot e^{jt}\\
+                            d&=\begin{equation*}\int_{0}^{\infty} k\cdot e^{jt}\, dz\end{equation*}=\frac{k\cdot e^{jt}}{j}\\
+                            &=\frac{v}{j}
+                            \end{align}
+                            $$
+                        </div>
+                        <p>
+                            自<span class="math">$v_{wrap}$</span>减速时通过距离为
+                        </p>
+                        <div class="math">
+                            $$
+                            d_{decel}=\frac{v_{wrap}}{j}=\frac{k\cdot a}{j}
+                            $$
+                        </div>
+                    </div>
+                    <div>
+                        <h4>时间</h4>
+                        <p>
+                            与加速度一样，从最大跃迁速度减速的时间是通过重新排列速度方程来计算的。
+                        </p>
+                        <div class="math">
+                            $$
+                            \begin{align}
+                            v&=k\cdot e^{jt}\\
+                            \frac{v}{k}&=e^{jt}\\
+                            t&=\frac{\ln(\frac{v}{k})}{j}
+                            \end{align}
+                            $$
+                        </div>
+                        <p>
+                            虽然从$s$到0的减速在距离上并不显著，但在时间上却很重要。这意味着减速的时间计算如下：
+                        </p>
+                        <div class="math">
+                            $$
+                            \begin{align}
+                            t_{decel}&=t_{decel\_wrap}-t_{decel\_s}\\
+                            &=\frac{\ln(\frac{v_{wrap}}{k})}{j}-\frac{\ln(\frac{s}{k})}{j}\\
+                            &=\frac{\ln(\frac{v_{wrap}}{k})-\ln(\frac{s}{k})}{j}\\
+                            &=\frac{\ln v_{wrap}-\ln k-\ln s+\ln k}{j}\\
+                            &=\frac{\ln v_{wrap}-ln s}{j}\\
+                            &=\frac{\ln(\frac{v_{wrap}}{s})}{j}
+                            \end{align}
+                            $$
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3>巡航</h3>
+                    <div>
+                        <h4>距离</h4>
+                        <p>
+                            巡航时的距离是总月前距离减去加速或减速时的任何距离。
+                        </p>
+                        <div class="math">
+                            $$
+                            d_{cruise}=d_{total}-d_{accel}-d_{decel}
+                            $$
+                        </div>
+                        <p>
+                            除了最快的舰船之外，这将会是<span class="math">$d_{total}-4$</span> AU
+                        </p>
+                    </div>
+                    <div>
+                        <h4>时间</h4>
+                        <p>
+                            巡航花费的时间为：
+                        </p>
+                        <div class="math">
+                            $$
+                            t_{cruise}=\frac{d_{cruise}}{v_{wrap}}
+                            $$
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h2>短途跃迁</h2>
+                <p>
+                    只要有一些时间是在最高跃迁速度下度过的，上述计算就有效；<span class="math">$d_{total}\geq d_{accel}+d_{decel}$</span>。如果跃迁过短以至于舰船不能达到最高速度，就需要另一组计算。
+                </p>
+                <div class="math">
+                    $$
+                    \begin{align}
+                    d_{accel}&=\frac{v_{max}}{k},d_{decel}=\frac{v_{max}}{j}\\
+                    d_{total}&=d_{accel}+d_{decel}=v_{max}(\frac{1}{k}+\frac{1}{j})\\
+                    v_{max}&=\frac{d_{total}\cdot k\cdot j}{k+j}
+                    \end{align}
+                    $$
+                </div>
+                <p>
+                    这样就可以使用前几节中描述的公式计算新的加速和减速时间,不过要将新的<span class="math"> $v_{max}$ </span>代入：
+                </p>
+                <div class="math">
+                    $$
+                    \begin{align}
+                    t_{accel}&=\frac{\ln(\frac{v_{max}}{k})}{k}\\
+                    t_{decel}&=\frac{\ln(\frac{v_{max}}{s})}{j}\\
+                    t_{total}&=t_{accel}+t_{decel}
+                    \end{align}
+                    $$
+                </div>
+            </div>
+            <div>
+                <h2>实现</h2>
+                <p>
+                    下面的python代码是上述内容的一个可能的实现。它试图生成与CCP在论坛上提出的相同的数据。除了50AU泰坦的跃迁速度是一秒之外，它与他们的数据是一致的。请注意，飞船的亚跃迁速度被固定为200m/s。这是因为CCP制作的表格假设每艘船都是以100m/s的速度脱出跃迁。如果试图对实际的飞船进行计算，这个值需要用一个更合适的值来代替。输出值也通过ceil()函数，因为这似乎与CCP使用的四舍五入模式相匹配。
+                </p>
+                <pre><code class="language-python" style="background-color: rgb(0, 0, 0);">
+                    import math
+                    AU_IN_M=149597870700
+
+                    def get_distance(dist):
+                        if dist > 1e9:
+                            return (dist / AU_IN_M, "AU")
+                        else:
+                            return (dist/1000, "KM")
+
+                    # 跃迁速度以AU/s为单位，亚跃迁速度以m/s为单位，距离以m为单位
+                    def calculate_time_in_warp(max_warp_speed, max_subwarp_speed, warp_dist):
+
+                        k_accel = max_warp_speed
+                        k_decel = min(max_warp_speed / 3, 2)
+
+                        warp_dropout_speed = min(max_subwarp_speed / 2, 100)
+                        max_ms_warp_speed = max_warp_speed * AU_IN_M
+
+                        accel_dist = max_ms_warp_speed / k_accel
+                        decel_dist = max_ms_warp_speed / k_decel
+
+                        minimum_dist = accel_dist + decel_dist
+
+                        cruise_time = 0
+
+                        if minimum_dist > warp_dist:
+                            max_ms_warp_speed = warp_dist * k_accel * k_decel / (k_accel + k_decel)
+                        else:
+                            cruise_time = (warp_dist - minimum_dist) / max_ms_warp_speed
+
+                        accel_time = math.log(max_ms_warp_speed / k_accel) / k_accel
+                        decel_time = math.log(max_ms_warp_speed / warp_dropout_speed) / k_decel
+
+
+                        total_time = cruise_time + accel_time + decel_time
+                        distance = get_distance(warp_dist)
+                        return total_time
+
+
+                    distances = [150e3, 1e9, AU_IN_M * 1, AU_IN_M * 2, AU_IN_M * 5, AU_IN_M * 10, AU_IN_M * 20, AU_IN_M * 50, AU_IN_M * 100, AU_IN_M * 200]
+                    speeds = [1.36, 1.5, 2, 2.2, 2.5, 2.75, 3, 3.3, 4.5, 5, 5.5, 6, 8]
+
+                    result = {}
+                    for speed in speeds:
+                        for dist in distances:
+                            result[(dist, speed)] = calculate_time_in_warp(speed, 200, dist)
+
+                    print("{:9s}".format(""), end="")
+                    for speed in speeds:
+                        print("{:9.2f}".format(speed), end="")
+
+                    last_dist = 1e999
+                    for x,y in sorted(result.keys()):
+                        dist = get_distance(x)
+                        if (y < last_dist):
+                            print("\n{:7.5n} {:s}".format(dist[0],dist[1]), end="")
+                        last_dist = y
+
+                        print("{:9.0f}".format(math.ceil(result[x,y])), end="")
+
+                    print()
+                </code></pre>
+                <div>
+                    <h3>输出</h3>
+                    <table class="data">
+                        <tbody>
+                            <caption>
+                                跃迁速度(AU/s)
+                            </caption>
+                            <tr>
+                                <th>距离</th>
+                                <td>1.36</td>
+                                <td>1.50</td>
+                                <td>2.00</td>
+                                <td>2.20</td>
+                                <td>2.50</td>
+                                <td>2.75</td>
+                                <td>3.00</td>
+                                <td>3.30</td>
+                                <td>4.50</td>
+                                <td>5.00</td>
+                                <td>5.50</td>
+                                <td>6.00</td>
+                                <td>8.00</td>
+                            </tr>
+                            <tr>
+                                <td>150 KM</td>
+                                <td>22</td>
+                                <td>20</td>
+                                <td>16</td>
+                                <td>14</td>
+                                <td>13</td>
+                                <td>12</td>
+                                <td>11</td>
+                                <td>10</td>
+                                <td>8</td>
+                                <td>7</td>
+                                <td>7</td>
+                                <td>6</td>
+                                <td>6</td>
+                            </tr>
+                            <tr>
+                                <td>1e+06 KM</td>
+                                <td>48</td>
+                                <td>44</td>
+                                <td>33</td>
+                                <td>30</td>
+                                <td>27</td>
+                                <td>25</td>
+                                <td>23</td>
+                                <td>21</td>
+                                <td>16</td>
+                                <td>14</td>
+                                <td>13</td>
+                                <td>12</td>
+                                <td>11</td>
+                            </tr>
+                            <tr>
+                                <td>1 AU</td>
+                                <td>63</td>
+                                <td>57</td>
+                                <td>43</td>
+                                <td>40</td>
+                                <td>35</td>
+                                <td>32</td>
+                                <td>29</td>
+                                <td>27</td>
+                                <td>20</td>
+                                <td>18</td>
+                                <td>17</td>
+                                <td>15</td>
+                                <td>14</td>
+                            </tr>
+                            <tr>
+                                <td>2 AU</td>
+                                <td>65</td>
+                                <td>59</td>
+                                <td>45</td>
+                                <td>41</td>
+                                <td>36</td>
+                                <td>33</td>
+                                <td>30</td>
+                                <td>28</td>
+                                <td>21</td>
+                                <td>19</td>
+                                <td>17</td>
+                                <td>16</td>
+                                <td>15</td>
+                            </tr>
+                            <tr>
+                                <td>5 AU</td>
+                                <td>67</td>
+                                <td>61</td>
+                                <td>47</td>
+                                <td>43</td>
+                                <td>38</td>
+                                <td>34</td>
+                                <td>32</td>
+                                <td>29</td>
+                                <td>22</td>
+                                <td>19</td>
+                                <td>18</td>
+                                <td>16</td>
+                                <td>15</td>
+                            </tr>
+                            <tr>
+                                <td>10 AU</td>
+                                <td>71</td>
+                                <td>65</td>
+                                <td>49</td>
+                                <td>45</td>
+                                <td>40</td>
+                                <td>36</td>
+                                <td>33</td>
+                                <td>30</td>
+                                <td>23</td>
+                                <td>20</td>
+                                <td>19</td>
+                                <td>17</td>
+                                <td>16</td>
+                            </tr>
+                            <tr>
+                                <td>20 AU</td>
+                                <td>78</td>
+                                <td>71</td>
+                                <td>54</td>
+                                <td>49</td>
+                                <td>44</td>
+                                <td>40</td>
+                                <td>37</td>
+                                <td>33</td>
+                                <td>25</td>
+                                <td>22</td>
+                                <td>21</td>
+                                <td>19</td>
+                                <td>17</td>
+                            </tr>
+                            <tr>
+                                <td>50 AU</td>
+                                <td>100</td>
+                                <td>91</td>
+                                <td>69</td>
+                                <td>63</td>
+                                <td>56</td>
+                                <td>51</td>
+                                <td>47</td>
+                                <td>43</td>
+                                <td>32</td>
+                                <td>28</td>
+                                <td>26</td>
+                                <td>24</td>
+                                <td>21</td>
+                            </tr>
+                            <tr>
+                                <td>100 AU</td>
+                                <td>137</td>
+                                <td>125</td>
+                                <td>94</td>
+                                <td>86</td>
+                                <td>76</td>
+                                <td>69</td>
+                                <td>63</td>
+                                <td>58</td>
+                                <td>43</td>
+                                <td>38</td>
+                                <td>35</td>
+                                <td>32</td>
+                                <td>27</td>
+                            </tr>
+                            <tr>
+                                <td>200 AU</td>
+                                <td>211</td>
+                                <td>191</td>
+                                <td>144</td>
+                                <td>131</td>
+                                <td>116</td>
+                                <td>105</td>
+                                <td>97</td>
+                                <td>88</td>
+                                <td>65</td>
+                                <td>58</td>
+                                <td>53</td>
+                                <td>49</td>
+                                <td>40</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
